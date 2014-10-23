@@ -1,20 +1,22 @@
-# Baron<br>rendre le refactoring custom<br>(en python) réaliste
+# RedBaron<br>une approche bottom-up au refactoring en Python
 
 ---
 
-# Avant de commencer
+# Moi
 
-* talk technique avancé (mais compréhensible)
-* Outil pour dev pour faire des outils pour dev
-* Problèmes pas forcement évident pour les débutants
+* Belgique
+* Code beaucoup trop (python (beaucoup), django, oueb, haskell, ...)
+* Tourisme des langages de programmation
+* Neutrinet (FFDN, Gitoyen)
+* La Quadrature du Net/Nurpa
+* UrLab (hackerspace à l'ULB/Bruxelles)/HSBxl (hackerspace à Bruxelles)
 
+En beaucoup trop détailler:
+[http://worlddomination.be/about/about.html](http://worlddomination.be/about/about.html)
 
-Est-ce que tout le monde comprend quand je dis ?
+---
 
-* Refactoring
-* Abstract Syntaxe Tree (AST)
-
-Si vous avez des questions de **comprehension** hésitez pas !
+# Avant de commencer: revisions
 
 ---
 
@@ -30,40 +32,23 @@ Si vous avez des questions de **comprehension** hésitez pas !
 
 ---
 
-# Moi
-
-* Belgique
-* Code beaucoup trop (python (beaucoup), django, oueb, haskell, ...)
-* Tourisme des langages de programmation
-* Neutrinet (FFDN, Gitoyen)
-* La Quadrature du Net/Nurpa
-* UrLab (hackerspace à l'ULB/Bruxelles)/HSBxl (hackerspace à Bruxelles)
-
-
-En beaucoup trop détailler:
-[http://worlddomination.be/about/about.html](http://worlddomination.be/about/about.html)
-
----
-
 # Plan
 
-* Expériences (== pourquoi j'ai fait ça)
-* Baron
-* RedBaron
-* Démo
-* Futur
-* Faim
+* Pourquoi ?
+* Solution au premier problème (baron)
+* Solution au deuxième problème (RedBaron)
+* Conclusion
 
 ---
 
-# Expériences
+# Pourquoi ?
 
 ---
 
 # Refactoring custom
 
 * J'ai toujours voulu écrire du code pour modifier mon code
-* Très difficile: analyse, déplacement, trop de possibilités, syntaxe
+* Très difficile: string énorme sans sens, analyse, déplacement, trop de possibilités, syntaxe
 * Frustrant, plein de cas où "ah, si seulement je pouvais scripter cette modification !"
 * Comme une blessure à la lèvre
 * Générer du code aussi
@@ -73,6 +58,18 @@ En beaucoup trop détailler:
 # Ast.py
 
 ![ast.py.png](ast.py.png)
+
+---
+
+# Ast.py
+
+Pas lossless !
+
+    ast_to_code(code_to_ast(code_source)) != source_code
+
+(Commentaires, formatting)
+
+(Et ast\_to\_code n'existe même pas de manière standard).
 
 ---
 
@@ -91,18 +88,6 @@ API Sax like
         # visit_...
 
 Super chiant, impossible à utiliser dans IPython efficacement.
-
----
-
-# Ast.py
-
-Pas lossless !
-
-    ast_to_code(code_to_ast(code_source)) != source_code
-
-(Commentaires, formatting)
-
-(Et ast\_to\_code n'existe même pas (bon, maintenant y a une lib inconnue qui fait ça)).
 
 ---
 
@@ -147,11 +132,14 @@ Auto formater du code python
 
 ---
 
-# ...
+# Conclusion: 2 problèmes
+
+* Il manque la bonne abstraction
+* Il manque la bonne interface
 
 ---
 
-# Baron
+# Solution 1: l'abstraction -> Baron
 
 ---
 
@@ -161,13 +149,6 @@ Auto formater du code python
 * source == ast\_to\_code(code\_to\_ast(source))
 * transforme un problème d'analyse de code en parcours/modification d'un graph
 * output du json pour compatibilité maximum (+ structure de donnée simple)
-
-*1 an de boulot (j'ai du apprendre)*
-
-* +1000 tests (TDD)
-* marche sur le top 100 de pypi
-* utilities: position\_to\_path, position\_to\_node, boundinx\_box, walker etc...
-* (encore quelques bugs ultra rare)
 
 ---
 
@@ -214,96 +195,103 @@ Auto formater du code python
 
 ---
 
+# État du projet
+
+*1 an de boulot (j'ai du apprendre)*
+
+* +1000 tests (TDD)
+* marche sur le top 100 de pypi
+* utilities: position\_to\_path, position\_to\_node, boundinx\_box, walker etc...
+* (encore quelques bugs ultra rare)
+* entièrement documenté
+
+---
+
 # Parenthèse: pyfmt
 
 ---
 
-# Suffisant ?
-
----
-
-# Problèmes
-
-* LossLess résolu
-* json une base cool, mais hyper chiant à utiliser -> comme du bytecode
-* besoin d'une abstraction cool à utiliser
-
----
-
-# RedBaron
+# Solution 2: l'interface -> RedBaron
 
 ---
 
 # RedBaron
 
 * Api au dessus du FST de Baron
-* Comme BeautifulSoup/Jquery
+* Comme BeautifulSoup/Jquery: mapping structure de donnée -> objects
 * Pour l'humain, ~user friendly~ (pour certaines définition de user)
 * Pensé, entre autre, pour être utilisé dans IPython (ou bpython)
 
 ---
 
-# RedBaron: exemple
+# Intuitif (autant que possible)
 
-    !python
+.help()
 
-    from redbaron import RedBaron
-
-    red = RedBaron("print 'Hello World!'")
-
-    red[0]  # print 'Hello World!'
-
-    red.find('print')  # print 'Hello World!'
-    red.print_  # print 'Hello World!'
-    red.string  # 'Hello World!'
-
-    red.find_all('print')  # [print 'Hello World!']
-    red('print')  # [print 'Hello World!']
-
-    red.string.value = "'Hello from RedBaron!'"
-    red  # print 'Hello from RedBaron!'
+shell __repr__
 
 ---
+
+# Exploration
+
+.find
+
+.find_all
+
+Raccourcies:
+
+* .query
+* (query)
+
+---
+
+# Modification
+
+"Normalement on devrait faire ça" -> pourri
+
+Magie de __setattr__ -> strings
+
+-> pas besoin de ré-apprendre un nouveau truc, vous savez déjà coder du python
 
 ![refactoring3.png](refactoring3.png)
 
 ---
 
-# Démo
+# Modifications avancés:
+
+funcdef.value.dumps() -> "chiant"
+
+Solution: magie (exemples)
+
+Pareil pour les: .else, .exceptions, .finally etc ...
 
 ---
 
-# Présent
+# Listes de choses
 
-2 core dev
-Peut/pas de pub (première conf)
+Problème: [1, 2, 3] -> 5 éléments en fait car 2 ","
 
-## Baron
+Solution: des "proxy" de listes qui donnent la même API que les listes python et gèrent le formatting pour vous
 
-* entièrement documenté
-* version 0.2
+Marche pour les:
+* "," (avec et sans indentation)
+* les ".", eg: a.b.c()
+* les lignes séparés par des retours à la ligne
 
-## RedBaron
+---
 
-* plus jeune
-* +100 tests
+# Démo ?
+
+---
+
+# Etat
+
+* +1200 tests
 * entièrement documenté (plein d'exemples)
-* 0.1 d'hier
-
-## Installation
-
-    pip install baron
-    pip install redbaron
 
 ---
 
-# Future
-
-* Baron déjà assez stable
-* Pub (haha)
-* Focus sur RedBaron
-* Commencer à rajouter de l'analyse de context dans redbaron ?
-* RedFlyingBaron pour éditer son code avec RedBaron ?
+# Conclusion
 
 ---
 
