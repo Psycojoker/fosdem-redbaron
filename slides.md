@@ -52,6 +52,7 @@ En beaucoup trop détailler:
 * Frustrant, plein de cas où "ah, si seulement je pouvais scripter cette modification !"
 * Comme une blessure à la lèvre
 * Générer du code aussi
+* seulement une poigné de gens font ça
 
 ---
 
@@ -208,6 +209,15 @@ Auto formater du code python
 ---
 
 # Solution 2: l'interface -> RedBaron
+
+---
+
+# Plan
+
+* principe
+* exploration (query)
+* modification
+* abstractions des listes
 
 ---
 
@@ -482,18 +492,18 @@ Marche pour les:
 
 ---
 
-![refactoring3.png](refactoring3.png)
-
----
-
 # Etat
 
 * +1200 tests
 * entièrement documenté (plein d'exemples) (bémol)
-* librairie de référence pour travail sur l'AST de Baron
+* librairie de référence pour écrire du code qui modifie du code
 * encore un peu rugueux (alpha ?)
 * devrait remplir 80% des cas
 * **pas** d'analyse statique (pas encore ?)
+
+---
+
+![refactoring3.png](refactoring3.png)
 
 ---
 
