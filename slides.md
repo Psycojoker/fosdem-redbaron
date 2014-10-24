@@ -112,8 +112,6 @@ Auto formater du code python
 
 # Refactoring en python
 
-![refactoring.png](refactoring.png)
-
 * BycleRepairMan
 * Rope (ast.py + regexs)
 * PyCharm (?)
