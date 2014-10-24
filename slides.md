@@ -207,76 +207,279 @@ Auto formater du code python
 
 ---
 
-# Parenthèse: pyfmt
-
----
-
 # Solution 2: l'interface -> RedBaron
 
 ---
 
 # RedBaron
 
-* Api au dessus du FST de Baron
+* Api au dessus de Baron
 * Comme BeautifulSoup/Jquery: mapping structure de donnée -> objects
-* Pour l'humain, ~user friendly~ (pour certaines définition de user)
+* Pour l'humain, user friendly autant que possible
 * Pensé, entre autre, pour être utilisé dans IPython (ou bpython)
+
+---
+
+# RedBaron
+
+* Api au dessus de Baron
+* Comme BeautifulSoup/Jquery: mapping structure de donnée -> objects
+* Pour l'humain, user friendly autant que possible
+* Pensé, entre autre, pour être utilisé dans IPython (ou bpython)
+
+API super simple:
+
+    !python
+    from redbaron import RedBaron
+
+    red = RedBaron("string representant du code source")
+    # ...
+    red.dumps()  # code source
 
 ---
 
 # Intuitif (autant que possible)
 
-.help()
+Surcharge de \_\_repr\_\_:
 
-shell __repr__
+BeautifulSoup:
+
+![soup.png](soup.png)
+
+---
+
+# Intuitif (autant que possible)
+
+Surcharge de \_\_repr\_\_:
+
+BeautifulSoup:
+
+![soup.png](soup.png)
+
+RedBaron:
+
+![repr.png](repr.png)
+
+---
+
+# Auto descriptif
+
+RedBaron:
+
+![at_0.png](at_0.png)
+
+---
+
+# Auto descriptif
+
+RedBaron:
+
+![at_0.png](at_0.png)
+
+".help()"
+
+![help.png](help.png)
 
 ---
 
 # Exploration
 
-.find
+Comme BeautifulSoup:
 
-.find_all
+    !python
+    red = RedBaron("a = 42\ndef test_chocolat(): pass")
+    red.find("name")
+    red.find("int", value=42)
+    red.find("def", name="g:test_*")
+    red.find("assignment", lambda x: x.target.dumps() == "INSTALLED_APPS")
 
-Raccourcies:
+    red.find_all("name")
+    red.find_all(("name", "int"))
+    red.find_all("def", arguments=lambda x: len(x) == 3)
+    red.find_all("def", recursive=False)
 
-* .query
-* (query)
+---
+
+# Exploration
+
+Comme BeautifulSoup:
+
+    !python
+    red = RedBaron("a = 42\ndef test_chocolat(): pass")
+    red.find("name")
+    red.find("int", value=42)
+    red.find("def", name="g:test_*")
+    red.find("assignment", lambda x: x.target.dumps() == "INSTALLED_APPS")
+
+    red.find_all("name")
+    red.find_all(("name", "int"))
+    red.find_all("def", arguments=lambda x: len(x) == 3)
+    red.find_all("def", recursive=False)
+
+Raccourcies (comme BeautifulSoup):
+
+    !python
+    red = RedBaron("a = 42\ndef test_chocolat(): pass")
+    red.name
+    red.int
+    red.else_
+
+    red("name")
+    red(("name", "int"))
+    red("def", arguments=lambda x: len(x) == 3)
 
 ---
 
 # Modification
 
-"Normalement on devrait faire ça" -> pourri
+Comment modifier une node ?
 
-Magie de __setattr__ -> strings
+    !python
+    from redbaron import RedBaron, BinaryOperatorNode
 
--> pas besoin de ré-apprendre un nouveau truc, vous savez déjà coder du python
+    red = RedBaron("a = 'plop'")
+    red[O].value  # 'plop'
+    red[0].value = BinaryOperatorNode({'first_formatting':[{'type': 'space',
+    'value': ' '}], 'value': '+', 'second_formatting': [{'type': 'space',
+    'value': ' '}], 'second': {'section': 'number', 'type': 'int', 'value':
+    '1'}, 'type': 'binary_operator', 'first': {'section': 'number', 'type':
+    'int', 'value': '1'}})
 
-![refactoring3.png](refactoring3.png)
+Pas hyper pratique ...
+
+---
+
+# Magie de \_\_setattr\_\_
+
+    !python
+    from redbaron import RedBaron, BinaryOperatorNode
+
+    red = RedBaron("a = 'plop'")
+    red[0].value = "1 + 1"
+
+    # marche aussi avec: nodes redbaron et ast
+
+Marche pour __toutes__ les nodes.
 
 ---
 
 # Modifications avancés:
 
-funcdef.value.dumps() -> "chiant"
+Autre problème: quel est le corps/body de la fonction "bar" ?
 
-Solution: magie (exemples)
+    !python
+    class Foo():
+        def bar(self):
+            pass
 
-Pareil pour les: .else, .exceptions, .finally etc ...
+        def baz(self):
+            pass
 
 ---
 
-# Listes de choses
+# Modifications avancés:
 
-Problème: [1, 2, 3] -> 5 éléments en fait car 2 ","
+Autre problème: quel est le corps/body de la fonction "bar" ?
 
-Solution: des "proxy" de listes qui donnent la même API que les listes python et gèrent le formatting pour vous
+    !python
+    class Foo():
+        def bar(self):
+            pass
+
+        def baz(self):
+            pass
+
+Expected:
+
+![expected.png](expected.png)
+
+---
+
+# Modifications avancés:
+
+Autre problème: quel est le corps/body de la fonction "bar" ?
+
+    !python
+    class Foo():
+        def bar(self):
+            pass
+
+        def baz(self):
+            pass
+
+Expected:
+
+![expected.png](expected.png)
+
+Reality:
+
+![reality.png](reality.png)
+
+---
+
+# Solution: magie !
+
+![magic.gif](magic.gif)
+
+    !python
+
+    red.find("def", name="bar").value = "pass"
+    red.find("def", name="bar").value = "pass\n"
+    red.find("def", name="bar").value = "    pass\n"
+    red.find("def", name="bar").value = "    pass\n    "
+    red.find("def", name="bar").value = "        pass\n        "
+    red.find("def", name="bar").value = "\n    pass\n    "
+    # etc ..
+
+Pareil pour les: *else*, *exceptions*, *finally*, *elif* etc ...
+
+---
+
+# Listes
+
+Problème: combien d'éléments dans le corps de cette liste ? <code>['a', 'b', 'c']</code>
+
+---
+
+# Listes
+
+
+Problème: combien d'éléments dans le corps de cette liste ?
+
+**Expected**:
+
+![list_expected.png](list_expected.png)
+
+---
+
+# Listes
+
+
+Problème: combien d'éléments dans le corps de cette liste ?
+
+**Expected**:
+
+![list_expected.png](list_expected.png)
+
+**Reality**:
+
+![list_reality.png](list_reality.png)
+
+---
+
+# Listes: solutions
+
+Solution: des "proxy" de listes qui donnent la même API que les listes python et gèrent le formatting pour vous.
+
+**Reality again**:
+
+![list_expected.png](list_expected.png)
 
 Marche pour les:
+
 * "," (avec et sans indentation)
-* les ".", eg: a.b.c()
-* les lignes séparés par des retours à la ligne
+* les ".", par exemple: <code>a.b.c().pouet[stuff]</code>
+* les lignes séparés par des retours à la ligne (corps des fonctions, "bloques python")
 
 ---
 
@@ -284,10 +487,18 @@ Marche pour les:
 
 ---
 
+![refactoring3.png](refactoring3.png)
+
+---
+
 # Etat
 
 * +1200 tests
-* entièrement documenté (plein d'exemples)
+* entièrement documenté (plein d'exemples) (bémol)
+* librairie de référence pour travail sur l'AST de Baron
+* encore un peu rugueux (alpha ?)
+* devrait remplir 80% des cas
+* **pas** d'analyse statique (pas encore ?)
 
 ---
 
@@ -299,15 +510,29 @@ Marche pour les:
 
 ---
 
-# « Mec, t'es en train de coder le nouvel 'ed' du 21 ème siècle avec 4 niveaux d'abstractions en plus »<br>Hastake - Fin bourré
+# « Mec, t'es en train de coder le nouvel 'ed' du 21 ème siècle avec 4 niveaux d'abstractions en plus »<br>un pote, fin bourré
 
 ---
 
 # Infos
 
-* [https://github.com/psycojoker/baron](https://github.com/psycojoker/baron)
+RedBaron:
+
 * [https://github.com/psycojoker/redbaron](https://github.com/psycojoker/redbaron)
 * [https://baron.readthedocs.org](https://baron.readthedocs.org)
+* <code>pip install redbaron</code>
+
+Baron:
+
+* [https://github.com/psycojoker/baron](https://github.com/psycojoker/baron)
 * [https://redbaron.readthedocs.org](https://redbaron.readthedocs.org)
+* <code>pip install baron</code>
+
+Contacts:
+
 * Moi: cortex@worlddomination.be
 * Irc: irc.freenode.net#baron
+
+---
+
+# Questions ?
