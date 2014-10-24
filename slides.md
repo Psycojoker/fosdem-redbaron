@@ -482,6 +482,66 @@ Marche pour les:
 
 ---
 
+# Quelques exemples
+
+    !python
+
+    # renomer un 'name' (attention: renomera pas tout)
+    for i in red('name', value='pouet'): i.value = 'plop'
+
+---
+
+# Quelques exemples
+
+    !python
+
+    # renomer un 'name' (attention: renomera pas tout)
+    for i in red('name', value='pouet'): i.value = 'plop'
+
+    # installer une django app
+    red.find("assign", target=lambda x: x.dumps() == 'INSTALLED_APPS').\
+        value.append("'debug_toolbar.apps.DebugToolbarConfig'")
+
+---
+
+# Quelques exemples
+
+    !python
+
+    # renomer un 'name' (attention: renomera pas tout)
+    for i in red('name', value='pouet'): i.value = 'plop'
+
+    # installer une django app
+    red.find("assign", target=lambda x: x.dumps() == 'INSTALLED_APPS').\
+        value.append("'debug_toolbar.apps.DebugToolbarConfig'")
+
+    # lines_profiler
+    red('def', recursive=False).\
+        map(lambda x: x.decorators.insert(0, '@profile'))
+
+---
+
+# Quelques exemples
+
+    !python
+
+    # renomer un 'name' (attention: renomera pas tout)
+    for i in red('name', value='pouet'): i.value = 'plop'
+
+    # installer une django app
+    red.find("assign", target=lambda x: x.dumps() == 'INSTALLED_APPS').\
+        value.append("'debug_toolbar.apps.DebugToolbarConfig'")
+
+    # lines_profiler
+    red('def', recursive=False).\
+        map(lambda x: x.decorators.insert(0, '@profile'))
+
+    # les retirer
+    red("decorator", lambda x: x.dumps() == "@decorator").\
+        map(lambda x: x.parent.parent.decorators.remove(x))
+
+---
+
 # Etat
 
 * +1200 tests
