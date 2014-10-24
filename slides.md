@@ -488,10 +488,6 @@ Marche pour les:
 
 ---
 
-# Démo ?
-
----
-
 # Etat
 
 * +1200 tests
