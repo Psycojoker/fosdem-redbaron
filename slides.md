@@ -527,7 +527,3 @@ Contacts:
 
 * Moi: cortex@worlddomination.be
 * Irc: irc.freenode.net#baron
-
----
-
-# Questions ?
