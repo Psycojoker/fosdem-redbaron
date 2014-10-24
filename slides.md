@@ -96,7 +96,7 @@ Super chiant, impossible à utiliser dans IPython efficacement.
 
 Django (memopol et co):
 
-    stuff.json -> models.py import.py
+    donnees.json -> models.py + import.py
 
 Autre project:
 
@@ -107,12 +107,6 @@ Autre project:
 # pythonfmt
 
 Auto formater du code python
-
----
-
-# BeurpMiner
-
-![beurpminer.png](beurpminer.png)
 
 ---
 
