@@ -49,6 +49,7 @@ En beaucoup trop détailler:
 * Comme une blessure à la lèvre
 * Générer du code aussi
 * seulement une poigné de gens font ça
+* Hyper dure: je suis en (x,y) dans un fichier, y a quoi autour de moi ?
 
 ---
 
@@ -117,7 +118,6 @@ Autre project:
 * BycleRepairMan
 * Rope (ast.py + regexs)
 * PyCharm (?)
-* Hyper dure: je suis en (x,y) dans un fichier, y a quoi autour de moi ?
 
 ---
 
