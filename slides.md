@@ -284,6 +284,7 @@ Comme BeautifulSoup:
     red.find("name")
     red.find("int", value=42)
     red.find("def", name="g:test_*")
+    red.find("def", name="re:test_*")
     red.find("assignment", lambda x: x.target.dumps() == "INSTALLED_APPS")
 
     red.find_all("name")
@@ -302,6 +303,7 @@ Comme BeautifulSoup:
     red.find("name")
     red.find("int", value=42)
     red.find("def", name="g:test_*")
+    red.find("def", name="re:test_*")
     red.find("assignment", lambda x: x.target.dumps() == "INSTALLED_APPS")
 
     red.find_all("name")
