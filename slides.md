@@ -4,12 +4,8 @@
 
 # Moi
 
-* Belgique
-* Code beaucoup trop (python (beaucoup), django, oueb, haskell, ...)
-* Tourisme des langages de programmation
-* Neutrinet (FFDN, Gitoyen)
-* La Quadrature du Net/Nurpa
-* UrLab (hackerspace à l'ULB/Bruxelles)/HSBxl (hackerspace à Bruxelles)
+* Laurent Peuch
+* Bram
 
 En beaucoup trop détailler:
 [http://worlddomination.be/about/about.html](http://worlddomination.be/about/about.html)
