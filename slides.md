@@ -12,6 +12,15 @@ En beaucoup trop détaillé :
 
 ---
 
+# Plan
+
+* Pourquoi ?
+* Solution au premier problème (baron)
+* Solution au deuxième problème (RedBaron)
+* Conclusion
+
+---
+
 # Avant de commencer : revisions
 
 ---
@@ -25,15 +34,6 @@ En beaucoup trop détaillé :
 # Abstract Syntax Tree (AST)
 
 ![ast.png](ast.png)
-
----
-
-# Plan
-
-* Pourquoi ?
-* Solution au premier problème (baron)
-* Solution au deuxième problème (RedBaron)
-* Conclusion
 
 ---
 
