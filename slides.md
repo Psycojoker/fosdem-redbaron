@@ -213,6 +213,7 @@ Autre project:
 * Api au dessus de Baron
 * Comme BeautifulSoup/Jquery: mapping structure de donnée -> objects
 * Pour l'humain, user friendly autant que possible
+* l'interface qui fait tous les trucs chiants pour vous
 * Pensé, entre autre, pour être utilisé dans IPython (ou bpython)
 
 ---
