@@ -190,7 +190,7 @@ Autre project:
 
 * +1000 tests (TDD)
 * marche sur le top 100 de pypi
-* utilities: position\_to\_path, position\_to\_node, boundinx\_box, walker etc...
+* utilities: position\_to\_path, position\_to\_node, bounding\_box, walker etc...
 * entièrement documenté
 
 ---
