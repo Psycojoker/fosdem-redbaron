@@ -134,7 +134,7 @@ Autre project:
 
 # Baron
 
-* ast lossless ! (FST == Full Syntaxe Tree)
+* ast lossless !
 * source == ast\_to\_code(code\_to\_ast(source))
 * transforme un problème d'analyse de code en parcours/modification d'un graph
 * output du json pour compatibilité maximum (+ structure de donnée simple)
