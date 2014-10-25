@@ -549,6 +549,14 @@ Marche pour les:
 
 ---
 
+# Documentation
+
+Exemples executés à la compilation:
+
+![documentation.png](documentation.png)
+
+---
+
 ![refactoring3.png](refactoring3.png)
 
 ---
