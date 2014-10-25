@@ -88,6 +88,12 @@ Super chiant, impossible à utiliser dans IPython efficacement.
 
 ---
 
+# pythonfmt
+
+Auto formater du code python
+
+---
+
 # Generation de code
 
 Django (memopol et co):
@@ -100,9 +106,9 @@ Autre project:
 
 ---
 
-# pythonfmt
+# Refactoring: top to bottom
 
-Auto formater du code python
+![refactoring1.png](refactoring1.png)
 
 ---
 
@@ -112,12 +118,6 @@ Auto formater du code python
 * Rope (ast.py + regexs)
 * PyCharm (?)
 * Hyper dure: je suis en (x,y) dans un fichier, y a quoi autour de moi ?
-
----
-
-# Refactoring: top to bottom
-
-![refactoring1.png](refactoring1.png)
 
 ---
 
