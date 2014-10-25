@@ -491,9 +491,6 @@ Marche pour les :
 
     !python
 
-    # renommer un 'name' (attention : renommera pas tout)
-    for i in red('name', value='pouet'): i.value = 'plop'
-
     # installer une django app
     red.find("assign", target=lambda x: x.dumps() == 'INSTALLED_APPS').\
         value.append("'debug_toolbar.apps.DebugToolbarConfig'")
@@ -503,13 +500,6 @@ Marche pour les :
 # Quelques exemples
 
     !python
-
-    # renommer un 'name' (attention : renommera pas tout)
-    for i in red('name', value='pouet'): i.value = 'plop'
-
-    # installer une django app
-    red.find("assign", target=lambda x: x.dumps() == 'INSTALLED_APPS').\
-        value.append("'debug_toolbar.apps.DebugToolbarConfig'")
 
     # lines_profiler
     red('def', recursive=False).\
@@ -520,13 +510,6 @@ Marche pour les :
 # Quelques exemples
 
     !python
-
-    # renommer un 'name' (attention : renommera pas tout)
-    for i in red('name', value='pouet'): i.value = 'plop'
-
-    # installer une django app
-    red.find("assign", target=lambda x: x.dumps() == 'INSTALLED_APPS').\
-        value.append("'debug_toolbar.apps.DebugToolbarConfig'")
 
     # lines_profiler
     red('def', recursive=False).\
