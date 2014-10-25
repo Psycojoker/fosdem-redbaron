@@ -538,6 +538,10 @@ Marche pour les:
 
 ---
 
+![refactoring3.png](refactoring3.png)
+
+---
+
 # Etat
 
 * +1200 tests
@@ -554,10 +558,6 @@ Marche pour les:
 Exemples executés à la compilation:
 
 ![documentation.png](documentation.png)
-
----
-
-![refactoring3.png](refactoring3.png)
 
 ---
 
