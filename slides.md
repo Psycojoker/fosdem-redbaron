@@ -7,12 +7,12 @@
 * Laurent Peuch
 * Bram
 
-En beaucoup trop détailler:
+En beaucoup trop détaillé :
 [http://worlddomination.be/about/about.html](http://worlddomination.be/about/about.html)
 
 ---
 
-# Avant de commencer: revisions
+# Avant de commencer : revisions
 
 ---
 
@@ -22,7 +22,7 @@ En beaucoup trop détailler:
 
 ---
 
-# Abstract Syntaxe Tree (AST)
+# Abstract Syntax Tree (AST)
 
 ![ast.png](ast.png)
 
@@ -44,12 +44,12 @@ En beaucoup trop détailler:
 # Refactoring custom
 
 * J'ai toujours voulu écrire du code pour modifier mon code
-* Très difficile: string énorme sans sens, analyse, déplacement, trop de possibilités, syntaxe
+* Très difficile : string énorme sans sens, analyse, déplacement, trop de possibilités, syntaxe
 * Frustrant, plein de cas où "ah, si seulement je pouvais scripter cette modification !"
 * Comme une blessure à la lèvre
 * Générer du code aussi
-* seulement une poigné de gens font ça
-* Hyper dure: je suis en (x,y) dans un fichier, y a quoi autour de moi ?
+* seulement une poignée de gens font ça
+* Hyper dur : je suis en (x,y) dans un fichier, y a quoi autour de moi ?
 
 ---
 
@@ -95,19 +95,19 @@ Auto formater du code python
 
 ---
 
-# Generation de code
+# Génération de code
 
-Django (memopol et co):
+Django (memopol et co) :
 
     donnees.json -> models.py + import.py
 
-Autre project:
+Autre projet :
 
     Générer du boiler plate en lisant des models de db
 
 ---
 
-# Refactoring: top to bottom
+# Refactoring : top to bottom
 
 ![refactoring1.png](refactoring1.png)
 
@@ -121,14 +121,14 @@ Autre project:
 
 ---
 
-# Conclusion: 2 problèmes
+# Conclusion : 2 problèmes
 
 * Il manque la bonne abstraction
 * Il manque la bonne interface
 
 ---
 
-# Solution 1: l'abstraction -> Baron
+# Solution 1 : l'abstraction -> Baron
 
 ---
 
@@ -136,7 +136,7 @@ Autre project:
 
 * ast lossless !
 * source == ast\_to\_code(code\_to\_ast(source))
-* transforme un problème d'analyse de code en parcours/modification d'un graph
+* transforme un problème d'analyse de code en parcours/modification d'un graphe
 * output du json pour compatibilité maximum (+ structure de donnée simple)
 
 ---
@@ -186,16 +186,16 @@ Autre project:
 
 # État du projet
 
-*1 an de boulot (j'ai du apprendre)*
+*1 an de boulot (j'ai dû apprendre)*
 
 * +1000 tests (TDD)
 * marche sur le top 100 de pypi
-* utilities: position\_to\_path, position\_to\_node, bounding\_box, walker etc...
+* utilities : position\_to\_path, position\_to\_node, bounding\_box, walker etc...
 * entièrement documenté
 
 ---
 
-# Solution 2: l'interface -> RedBaron
+# Solution 2 : l'interface -> RedBaron
 
 ---
 
@@ -204,14 +204,14 @@ Autre project:
 * principe
 * exploration (query)
 * modification
-* abstractions des listes
+* abstraction des listes
 
 ---
 
 # RedBaron
 
 * Api au dessus de Baron
-* Comme BeautifulSoup/Jquery: mapping structure de donnée -> objects
+* Comme BeautifulSoup/Jquery : mapping structure de donnée -> objects
 * Pour l'humain, user friendly autant que possible
 * l'interface qui fait tous les trucs chiants pour vous
 * Pensé, entre autre, pour être utilisé dans IPython (ou bpython)
@@ -220,12 +220,12 @@ Autre project:
 
 # RedBaron
 
-API super simple:
+API super simple :
 
     !python
     from redbaron import RedBaron
 
-    red = RedBaron("string representant du code source")
+    red = RedBaron("string représentant du code source")
     # ...
     red.dumps()  # code source
 
@@ -233,9 +233,9 @@ API super simple:
 
 # Intuitif (autant que possible)
 
-Surcharge de \_\_repr\_\_:
+Surcharge de \_\_repr\_\_ :
 
-BeautifulSoup:
+BeautifulSoup :
 
 ![soup.png](soup.png)
 
@@ -243,13 +243,13 @@ BeautifulSoup:
 
 # Intuitif (autant que possible)
 
-Surcharge de \_\_repr\_\_:
+Surcharge de \_\_repr\_\_ :
 
-BeautifulSoup:
+BeautifulSoup :
 
 ![soup.png](soup.png)
 
-RedBaron:
+RedBaron :
 
 ![repr.png](repr.png)
 
@@ -257,7 +257,7 @@ RedBaron:
 
 # Auto descriptif
 
-RedBaron:
+RedBaron :
 
 ![at_0.png](at_0.png)
 
@@ -265,7 +265,7 @@ RedBaron:
 
 # Auto descriptif
 
-RedBaron:
+RedBaron :
 
 ![at_0.png](at_0.png)
 
@@ -277,7 +277,7 @@ RedBaron:
 
 # Exploration
 
-Comme BeautifulSoup:
+Comme BeautifulSoup :
 
     !python
     red = RedBaron("a = 42\ndef test_chocolat(): pass")
@@ -296,7 +296,7 @@ Comme BeautifulSoup:
 
 # Exploration
 
-Comme BeautifulSoup:
+Comme BeautifulSoup :
 
     !python
     red = RedBaron("a = 42\ndef test_chocolat(): pass")
@@ -311,7 +311,7 @@ Comme BeautifulSoup:
     red.find_all("def", arguments=lambda x: len(x) == 3)
     red.find_all("def", recursive=False)
 
-Raccourcies (comme BeautifulSoup):
+Raccourcis (comme BeautifulSoup) :
 
     !python
     red = RedBaron("a = 42\ndef test_chocolat(): pass")
@@ -352,15 +352,15 @@ Pas hyper pratique ...
     red = RedBaron("a = 'plop'")
     red[0].value = "1 + 1"
 
-    # marche aussi avec: nodes redbaron et ast
+    # marche aussi avec : nodes redbaron et ast
 
 Marche pour __toutes__ les nodes.
 
 ---
 
-# Modifications avancés:
+# Modifications avancées :
 
-Autre problème: quel est le corps/body de la fonction "bar" ?
+Autre problème : quel est le corps/body de la fonction "bar" ?
 
     !python
     class Foo():
@@ -372,9 +372,9 @@ Autre problème: quel est le corps/body de la fonction "bar" ?
 
 ---
 
-# Modifications avancés:
+# Modifications avancées :
 
-Autre problème: quel est le corps/body de la fonction "bar" ?
+Autre problème : quel est le corps/body de la fonction "bar" ?
 
     !python
     class Foo():
@@ -384,15 +384,15 @@ Autre problème: quel est le corps/body de la fonction "bar" ?
         def baz(self):
             pass
 
-Expected:
+Expected :
 
 ![expected.png](expected.png)
 
 ---
 
-# Modifications avancés:
+# Modifications avancés :
 
-Autre problème: quel est le corps/body de la fonction "bar" ?
+Autre problème : quel est le corps/body de la fonction "bar" ?
 
     !python
     class Foo():
@@ -402,17 +402,17 @@ Autre problème: quel est le corps/body de la fonction "bar" ?
         def baz(self):
             pass
 
-Expected:
+Expected :
 
 ![expected.png](expected.png)
 
-Reality:
+Reality :
 
 ![reality.png](reality.png)
 
 ---
 
-# Solution: magie !
+# Solution : magie !
 
 ![magic.gif](magic.gif)
 
@@ -426,22 +426,22 @@ Reality:
     red.find("def", name="bar").value = "\n    pass\n    "
     # etc ..
 
-Pareil pour les: *else*, *exceptions*, *finally*, *elif* etc ...
+Pareil pour les : *else*, *exceptions*, *finally*, *elif* etc ...
 
 ---
 
 # Listes
 
-Problème: combien d'éléments dans le corps de cette liste ? <code>['a', 'b', 'c']</code>
+Problème : combien d'éléments dans le corps de cette liste ? <code>['a', 'b', 'c']</code>
 
 ---
 
 # Listes
 
 
-Problème: combien d'éléments dans le corps de cette liste ?
+Problème : combien d'éléments dans le corps de cette liste ?
 
-**Expected**:
+**Expected** :
 
 ![list_expected.png](list_expected.png)
 
@@ -450,31 +450,31 @@ Problème: combien d'éléments dans le corps de cette liste ?
 # Listes
 
 
-Problème: combien d'éléments dans le corps de cette liste ?
+Problème : combien d'éléments dans le corps de cette liste ?
 
-**Expected**:
+**Expected** :
 
 ![list_expected.png](list_expected.png)
 
-**Reality**:
+**Reality** :
 
 ![list_reality.png](list_reality.png)
 
 ---
 
-# Listes: solutions
+# Listes : solutions
 
-Solution: des "proxy" de listes qui donnent la même API que les listes python et gèrent le formatting pour vous.
+Solution : des "proxy" de listes qui donnent la même API que les listes python et gèrent le formatting pour vous.
 
-**Reality again**:
+**Reality again** :
 
 ![list_expected.png](list_expected.png)
 
-Marche pour les:
+Marche pour les :
 
 * "," (avec et sans indentation)
-* les ".", par exemple: <code>a.b.c().pouet[stuff]</code>
-* les lignes séparés par des retours à la ligne (corps des fonctions, "bloques python")
+* les ".", par exemple : <code>a.b.c().pouet[stuff]</code>
+* les lignes séparées par des retours à la ligne (corps des fonctions, "bloc python")
 
 ---
 
@@ -482,7 +482,7 @@ Marche pour les:
 
     !python
 
-    # renomer un 'name' (attention: renomera pas tout)
+    # renommer un 'name' (attention : renommera pas tout)
     for i in red('name', value='pouet'): i.value = 'plop'
 
 ---
@@ -491,7 +491,7 @@ Marche pour les:
 
     !python
 
-    # renomer un 'name' (attention: renomera pas tout)
+    # renommer un 'name' (attention : renommera pas tout)
     for i in red('name', value='pouet'): i.value = 'plop'
 
     # installer une django app
@@ -504,7 +504,7 @@ Marche pour les:
 
     !python
 
-    # renomer un 'name' (attention: renomera pas tout)
+    # renommer un 'name' (attention : renommera pas tout)
     for i in red('name', value='pouet'): i.value = 'plop'
 
     # installer une django app
@@ -521,7 +521,7 @@ Marche pour les:
 
     !python
 
-    # renomer un 'name' (attention: renomera pas tout)
+    # renommer un 'name' (attention : renommera pas tout)
     for i in red('name', value='pouet'): i.value = 'plop'
 
     # installer une django app
@@ -542,7 +542,7 @@ Marche pour les:
 
 ---
 
-# Etat
+# État
 
 * +1200 tests
 * entièrement documenté (plein d'exemples) (bémol)
@@ -555,7 +555,7 @@ Marche pour les:
 
 # Documentation
 
-Exemples executés à la compilation:
+Exemples executés à la compilation :
 
 ![documentation.png](documentation.png)
 
@@ -575,19 +575,19 @@ Exemples executés à la compilation:
 
 # Infos
 
-RedBaron:
+RedBaron :
 
 * [https://github.com/psycojoker/redbaron](https://github.com/psycojoker/redbaron)
 * [https://baron.readthedocs.org](https://baron.readthedocs.org)
 * <code>pip install redbaron</code>
 
-Baron:
+Baron :
 
 * [https://github.com/psycojoker/baron](https://github.com/psycojoker/baron)
 * [https://redbaron.readthedocs.org](https://redbaron.readthedocs.org)
 * <code>pip install baron</code>
 
-Contacts:
+Contacts :
 
-* Moi: cortex@worlddomination.be
-* Irc: irc.freenode.net#baron
+* Moi : cortex@worlddomination.be
+* Irc : irc.freenode.net#baron
