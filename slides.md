@@ -543,11 +543,12 @@ Marche pour les :
 # État
 
 * +1200 tests
-* entièrement documenté (plein d'exemples) (bémol)
+* entièrement documenté (plein d'exemples)
+* tutoriel
 * librairie de référence pour écrire du code qui modifie du code
 * encore un peu rugueux (alpha ?)
 * devrait remplir 80% des cas
-* **pas** d'analyse statique (pas encore ?)
+* **pas** d'analyse statique (plus tard avec rope/astroid ?)
 
 ---
 
