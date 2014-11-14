@@ -521,6 +521,21 @@ Marche pour les :
 
 ---
 
+# Quelques exemples
+
+    !python
+
+    # print a -> logger.debug(a)
+    red('print', value=lambda x: len(x) == 1).\
+        map(lambda x: x.replace('logger.debug(%s)' % x.value.dumps())
+
+    # print a, b, c -> logger.debug("%s %s %s" % (a, b, c))
+    red('print', value=lambda x: len(x) == 1).\
+        map(lambda x: x.replace('logger.debug("%s" % (%s))' %
+                                    (" ".join('%s' * len(x.value)))
+
+---
+
 ![refactoring3.png](refactoring3.png)
 
 ---
