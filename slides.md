@@ -117,7 +117,7 @@ Autre projet :
 
 * BycleRepairMan
 * Rope (ast.py + regexs)
-* PyCharm (?)
+* PyCharm
 
 ---
 
