@@ -478,6 +478,16 @@ Marche pour les :
 
 ---
 
+# Helpers
+
+* <code>.map</code>
+* <code>.apply</code>
+* <code>.filter</code>
+* <code>.next</code>, <code>.previous</code>, <code>.parent</code>
+* <code>.replace</code>
+
+---
+
 # Quelques exemples
 
     !python
