@@ -153,26 +153,26 @@ Autre projet :
         {
             "first_formatting": [
                 {
-                    "type": "space", 
+                    "type": "space",
                     "value": " "
                 }
-            ], 
-            "value": "+", 
+            ],
+            "value": "+",
             "second_formatting": [
                 {
-                    "type": "space", 
+                    "type": "space",
                     "value": " "
                 }
-            ], 
+            ],
             "second": {
-                "section": "number", 
-                "type": "int", 
+                "section": "number",
+                "type": "int",
                 "value": "2"
-            }, 
-            "type": "binary_operator", 
+            },
+            "type": "binary_operator",
             "first": {
-                "section": "number", 
-                "type": "int", 
+                "section": "number",
+                "type": "int",
                 "value": "1"
             }
         }
