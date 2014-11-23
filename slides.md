@@ -570,6 +570,56 @@ Exemples executés à la compilation :
 
 ---
 
+# Projets voisins: PyFmt
+
+Usage:
+
+    pyfmt file.py  # output to standard output
+    pyfmt -i file.py  # replace the content of the file, like -i of sed
+
+Depuis python:
+
+    !python
+    from pyfmt import format_code
+
+    format_code(source_code)
+
+---
+
+# Projets voisins: RedFlyingBaron
+
+    !bash
+    red *.py  # dans un shell bash/zsh/autre
+
+Qui lance un shell:
+
+    !python
+    red
+    red[0]
+    red["./test_redflyingbaron.py"]
+    red["test_redflyingbaron.py"]
+    red["test_redflyingbaron"]
+    red[1:]
+
+    red.display()
+
+    red[0].save()
+    red.save()
+    red[0].reload()
+    red.reload()
+
+    red["f:redflyingbaron"]
+    red[re.compile(r'[^_]+')]
+    red["re:[^_]+"]
+    red[lambda key, value: "red" in key]
+
+    red.find("stuff")
+    red.find_all("stuff")
+
+    red.add("/path/to/file", "/path/to/another/file", "again.py")
+
+---
+
 # Conclusion
 
 ---
