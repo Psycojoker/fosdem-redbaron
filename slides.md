@@ -481,6 +481,7 @@ Works for:
 * <code>.filter</code>
 * <code>.next</code>, <code>.previous</code>, <code>.parent</code>
 * <code>.replace</code>
+* <code>.insert_before</code> <code>.insert_after</code>
 
 ---
 
