@@ -599,14 +599,14 @@ Contacts:
 
 ---
 
-# Projets voisins: PyFmt
+# Sister project: PyFmt
 
 Usage:
 
     pyfmt file.py  # output to standard output
     pyfmt -i file.py  # replace the content of the file, like -i of sed
 
-Depuis python:
+From python:
 
     !python
     from pyfmt import format_code
@@ -615,12 +615,12 @@ Depuis python:
 
 ---
 
-# Projets voisins: RedFlyingBaron
+# Sister project: RedFlyingBaron
 
     !bash
-    red *.py  # dans un shell bash/zsh/autre
+    red *.py  # in a shell bash/zsh/autre
 
-Qui lance un shell:
+It launchs a Ipython shell with:
 
     !python
     red
