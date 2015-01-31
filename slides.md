@@ -1,27 +1,27 @@
-# RedBaron<br>une approche bottom-up au refactoring en Python
+# RedBaron<br>a bottom up approach to refactoring in python
 
 ---
 
-# Moi
+# Me
 
 * Laurent Peuch
 * Bram
 
-En beaucoup trop détaillé :
+Verbose version:
 [http://worlddomination.be/about/about.html](http://worlddomination.be/about/about.html)
 
 ---
 
 # Plan
 
-* Pourquoi ?
-* Solution au premier problème (baron)
-* Solution au deuxième problème (RedBaron)
+* Why?
+* Solution for the first problem (baron)
+* Solution for the second problem (RedBaron)
 * Conclusion
 
 ---
 
-# Avant de commencer : revisions
+# Before starting: some reminders
 
 ---
 
@@ -37,19 +37,19 @@ En beaucoup trop détaillé :
 
 ---
 
-# Pourquoi ?
+# Why?
 
 ---
 
-# Refactoring custom
+# Custom refactoring
 
-* J'ai toujours voulu écrire du code pour modifier mon code
-* Très difficile : string énorme sans sens, analyse, déplacement, trop de possibilités, syntaxe
-* Frustrant, plein de cas où "ah, si seulement je pouvais scripter cette modification !"
-* Comme une blessure à la lèvre
-* Générer du code aussi
-* seulement une poignée de gens font ça
-* Hyper dur : je suis en (x,y) dans un fichier, y a quoi autour de moi ?
+* I always wanted to be able to write code to modify source code
+* Extremely hard: working on a huge string without any sens, analysing it, moving stuff around, syntax, too many possibilities
+* Frustrating, so many situation where I though "Ah! If I could do that!"
+* Always bothering me
+* Code generation too
+* Only a bunch of people in the world actually do that
+* Extremely hard: I'm at (x,y) in one file, what is the meaning of my surroundings?
 
 ---
 
@@ -61,13 +61,13 @@ En beaucoup trop détaillé :
 
 # Ast.py
 
-Pas lossless !
+Not lossless !
 
     ast_to_code(code_to_ast(code_source)) != source_code
 
-(Commentaires, formatting)
+(Comments, formatting)
 
-(Et ast\_to\_code n'existe même pas de manière standard).
+(And ast\_to\_code doesn't exist officially).
 
 ---
 
@@ -85,29 +85,25 @@ API Sax like
 
         # visit_...
 
-Super chiant, impossible à utiliser dans IPython efficacement.
+Terribly boring and unfunny to use (and unusable in a shell like IPython.)
 
 ---
 
 # pythonfmt
 
-Auto formater du code python
+Source code auto formater
 
 ---
 
-# Génération de code
+# Code generation
 
-Django (memopol et co) :
+Django (opendata projects like memopol):
 
     donnees.json -> models.py + import.py
 
-Autre projet :
-
-    Générer du boiler plate en lisant des models de db
-
 ---
 
-# Refactoring : top to bottom
+# Refactoring: top to bottom
 
 ![refactoring1.png](refactoring1.png)
 
@@ -121,27 +117,27 @@ Autre projet :
 
 ---
 
-# Conclusion : 2 problèmes
+# Conclusion: 2 problems
 
-* Il manque la bonne abstraction
-* Il manque la bonne interface
+* We miss a good abstraction
+* We miss a good API
 
 ---
 
-# Solution 1 : l'abstraction -> Baron
+# Solution 1: abstraction -> Baron
 
 ---
 
 # Baron
 
-* ast lossless !
+* lossless ast!
 * source == ast\_to\_code(code\_to\_ast(source))
-* transforme un problème d'analyse de code en parcours/modification d'un graphe
-* output du json pour compatibilité maximum (+ structure de donnée simple)
+* from an analysis problem to a graph modification problem
+* output json for maximal interoperability (and data structure > objects in simplicity)
 
 ---
 
-# Exemple
+# Example
 
     !python
 
@@ -184,88 +180,88 @@ Autre projet :
 
 ---
 
-# État du projet
+# State of the project
 
-*1 an de boulot (j'ai dû apprendre)*
+*~1 year of work (needed to learn)*
 
-* +1000 tests (TDD)
-* marche sur le top 100 de pypi
-* utilities : position\_to\_path, position\_to\_node, bounding\_box, walker etc...
-* entièrement documenté
+* +1000 unit tests (TDD)
+* works on the top 100 of pypi
+* utilities: position\_to\_path, position\_to\_node, bounding\_box, walker etc...
+* fully documented
 
 ---
 
-# Solution 2 : l'interface -> RedBaron
+# Solution 2: API -> RedBaron
 
 ---
 
 # Plan
 
-* principe
+* principle
 * exploration (query)
-* modification
-* abstraction des listes
+* graph modification
+* lists modification
 
 ---
 
 # RedBaron
 
-* Api au dessus de Baron
-* Comme BeautifulSoup/Jquery : mapping structure de donnée -> objects
-* Pour l'humain, user friendly autant que possible
-* l'interface qui fait tous les trucs chiants pour vous
-* Pensé, entre autre, pour être utilisé dans IPython (ou bpython)
+* API on top of Baron
+* Like BeautifulSoup/JQuery: mapping from a datastructure to objects
+* For the human: user friendly as much as possible
+* try to do all the boring low level stuff for you
+* Designed to be used in IPython (but not only)
 
 ---
 
 # RedBaron
 
-API super simple :
+Very simple API:
 
     !python
     from redbaron import RedBaron
 
-    red = RedBaron("string représentant du code source")
+    red = RedBaron("some source code as a string")
     # ...
-    red.dumps()  # code source
+    red.dumps()  # source code
 
 ---
 
-# Intuitif (autant que possible)
+# As intuitive as possible
 
-Surcharge de \_\_repr\_\_ :
+Overloading of \_\_repr\_\_:
 
-BeautifulSoup :
+BeautifulSoup:
 
 ![soup.png](soup.png)
 
 ---
 
-# Intuitif (autant que possible)
+# As intuitive as possible
 
-Surcharge de \_\_repr\_\_ :
+Overloading of \_\_repr\_\_:
 
-BeautifulSoup :
+BeautifulSoup:
 
 ![soup.png](soup.png)
 
-RedBaron :
+RedBaron:
 
 ![repr.png](repr.png)
 
 ---
 
-# Auto descriptif
+# Self descriptive
 
-RedBaron :
+RedBaron:
 
 ![at_0.png](at_0.png)
 
 ---
 
-# Auto descriptif
+# Self descriptive
 
-RedBaron :
+RedBaron:
 
 ![at_0.png](at_0.png)
 
@@ -277,10 +273,10 @@ RedBaron :
 
 # Exploration
 
-Comme BeautifulSoup :
+Like BeautifulSoup:
 
     !python
-    red = RedBaron("a = 42\ndef test_chocolat(): pass")
+    red = RedBaron("a = 42\ndef test_chocolate(): pass")
     red.find("name")
     red.find("int", value=42)
     red.find("def", name="g:test_*")
@@ -296,10 +292,10 @@ Comme BeautifulSoup :
 
 # Exploration
 
-Comme BeautifulSoup :
+Like BeautifulSoup:
 
     !python
-    red = RedBaron("a = 42\ndef test_chocolat(): pass")
+    red = RedBaron("a = 42\ndef test_chocolate(): pass")
     red.find("name")
     red.find("int", value=42)
     red.find("def", name="g:test_*")
@@ -311,10 +307,10 @@ Comme BeautifulSoup :
     red.find_all("def", arguments=lambda x: len(x) == 3)
     red.find_all("def", recursive=False)
 
-Raccourcis (comme BeautifulSoup) :
+Shortcuts (like BeautifulSoup):
 
     !python
-    red = RedBaron("a = 42\ndef test_chocolat(): pass")
+    red = RedBaron("a = 42\ndef test_chocolate(): pass")
     red.name
     red.int
     red.else_
@@ -327,7 +323,7 @@ Raccourcis (comme BeautifulSoup) :
 
 # Modification
 
-Comment modifier une node ?
+How to modify a node?
 
     !python
     from redbaron import RedBaron, BinaryOperatorNode
@@ -340,11 +336,11 @@ Comment modifier une node ?
     '1'}, 'type': 'binary_operator', 'first': {'section': 'number', 'type':
     'int', 'value': '1'}})
 
-Pas hyper pratique ...
+Pretty much horrible.
 
 ---
 
-# Magie de \_\_setattr\_\_
+# Magic with \_\_setattr\_\_
 
     !python
     from redbaron import RedBaron, BinaryOperatorNode
@@ -352,15 +348,15 @@ Pas hyper pratique ...
     red = RedBaron("a = 'plop'")
     red[0].value = "1 + 1"
 
-    # marche aussi avec : nodes redbaron et ast
+    # works also with: redbaron nodes and json ast
 
-Marche pour __toutes__ les nodes.
+Works for __every__ nodes.
 
 ---
 
-# Modifications avancées :
+# Advanced modifications:
 
-Autre problème : quel est le corps/body de la fonction "bar" ?
+Another problem: what is the body of the bar function?
 
     !python
     class Foo():
@@ -372,9 +368,9 @@ Autre problème : quel est le corps/body de la fonction "bar" ?
 
 ---
 
-# Modifications avancées :
+# Advanced modifications:
 
-Autre problème : quel est le corps/body de la fonction "bar" ?
+Another problem: what is the body of the bar function?
 
     !python
     class Foo():
@@ -384,15 +380,15 @@ Autre problème : quel est le corps/body de la fonction "bar" ?
         def baz(self):
             pass
 
-Expected :
+Expected:
 
 ![expected.png](expected.png)
 
 ---
 
-# Modifications avancés :
+# Advanced modifications:
 
-Autre problème : quel est le corps/body de la fonction "bar" ?
+Another problem: what is the body of the bar function?
 
     !python
     class Foo():
@@ -402,17 +398,17 @@ Autre problème : quel est le corps/body de la fonction "bar" ?
         def baz(self):
             pass
 
-Expected :
+Expected:
 
 ![expected.png](expected.png)
 
-Reality :
+Reality:
 
 ![reality.png](reality.png)
 
 ---
 
-# Solution : magie !
+# Solution: magic!
 
 ![magic.gif](magic.gif)
 
@@ -426,55 +422,55 @@ Reality :
     red.find("def", name="bar").value = "\n    pass\n    "
     # etc ..
 
-Pareil pour les : *else*, *exceptions*, *finally*, *elif* etc ...
+Works for every node with a body: *else*, *exceptions*, *finally*, *elif* etc...
 
 ---
 
-# Listes
+# Lists
 
-Problème : combien d'éléments dans le corps de cette liste ? <code>['a', 'b', 'c']</code>
+Problem: how many elements are in this list? <code>['a', 'b', 'c']</code>
 
 ---
 
-# Listes
+# Lists
 
 
-Problème : combien d'éléments dans le corps de cette liste ?
+Problem: how many elements are in this list?
 
-**Expected** :
+**Expected**:
 
 ![list_expected.png](list_expected.png)
 
 ---
 
-# Listes
+# Lists
 
 
-Problème : combien d'éléments dans le corps de cette liste ?
+Problem: how many elements are in this list?
 
-**Expected** :
+**Expected**:
 
 ![list_expected.png](list_expected.png)
 
-**Reality** :
+**Reality**:
 
 ![list_reality.png](list_reality.png)
 
 ---
 
-# Listes : solutions
+# Lists: solution
 
-Solution : des "proxy" de listes qui donnent la même API que les listes python et gèrent le formatting pour vous.
+Solution: "proxy lists", gives you the same API than python list and handle formatting for you.
 
-**Reality again** :
+**Reality again**:
 
 ![list_expected.png](list_expected.png)
 
-Marche pour les :
+Works for:
 
-* "," (avec et sans indentation)
-* les ".", par exemple : <code>a.b.c().pouet[stuff]</code>
-* les lignes séparées par des retours à la ligne (corps des fonctions, "bloc python")
+* "," (with and without indentations)
+* ".", for example: <code>a.b.c().pouet[stuff]</code>
+* endl separated lines (function body, "blocks")
 
 ---
 
@@ -488,26 +484,26 @@ Marche pour les :
 
 ---
 
-# Quelques exemples
+# Some examples
 
     !python
 
-    # renommer un 'name' (attention : renommera pas tout)
+    # rename a 'name' (warning: won't rename everything)
     for i in red('name', value='pouet'): i.value = 'plop'
 
 ---
 
-# Quelques exemples
+# Some examples
 
     !python
 
-    # installer une django app
+    # install a django app
     red.find("assign", target=lambda x: x.dumps() == 'INSTALLED_APPS').\
         value.append("'debug_toolbar.apps.DebugToolbarConfig'")
 
 ---
 
-# Quelques exemples
+# Some examples
 
     !python
 
@@ -517,7 +513,7 @@ Marche pour les :
 
 ---
 
-# Quelques exemples
+# Some examples
 
     !python
 
@@ -525,13 +521,13 @@ Marche pour les :
     red('def', recursive=False).\
         map(lambda x: x.decorators.insert(0, '@profile'))
 
-    # les retirer
+    # remove them
     red("decorator", lambda x: x.dumps() == "@decorator").\
         map(lambda x: x.parent.parent.decorators.remove(x))
 
 ---
 
-# Quelques exemples
+# Some examples
 
     !python
 
@@ -550,23 +546,56 @@ Marche pour les :
 
 ---
 
-# État
+# Project state
 
 * +1200 tests
-* entièrement documenté (plein d'exemples)
-* tutoriel
-* librairie de référence pour écrire du code qui modifie du code
-* encore un peu rugueux (alpha ?)
-* devrait remplir 80% des cas
-* **pas** d'analyse statique (plus tard avec rope/astroid ?)
+* fully documented (example for everything
+* tutorial
+* reference lib to use works with baron
+* still in alpha, still some a bit annoying bugs
+* should be working for 80% of the cases
+* **No** static analysis (later with astroid/jedi?)
 
 ---
 
 # Documentation
 
-Exemples executés à la compilation :
+Every example are run at documentation compile time:
 
 ![documentation.png](documentation.png)
+
+---
+
+# Conclusion
+
+---
+
+![kent.png](kent.png)
+
+---
+
+# "Dude, you are coding the new 'ed' of the 21th century with 4 more level of abstractions!"<br>a friend, drunk
+
+---
+
+# Infos
+
+RedBaron:
+
+* [https://github.com/psycojoker/redbaron](https://github.com/psycojoker/redbaron)
+* [https://baron.readthedocs.org](https://baron.readthedocs.org)
+* <code>pip install redbaron</code>
+
+Baron:
+
+* [https://github.com/psycojoker/baron](https://github.com/psycojoker/baron)
+* [https://redbaron.readthedocs.org](https://redbaron.readthedocs.org)
+* <code>pip install baron</code>
+
+Contacts:
+
+* Me: cortex@worlddomination.be
+* Irc: irc.freenode.net#baron
 
 ---
 
@@ -617,36 +646,3 @@ Qui lance un shell:
     red.find_all("stuff")
 
     red.add("/path/to/file", "/path/to/another/file", "again.py")
-
----
-
-# Conclusion
-
----
-
-![kent.png](kent.png)
-
----
-
-# « Mec, t'es en train de coder le nouvel 'ed' du 21 ème siècle avec 4 niveaux d'abstractions en plus »<br>un pote, fin bourré
-
----
-
-# Infos
-
-RedBaron :
-
-* [https://github.com/psycojoker/redbaron](https://github.com/psycojoker/redbaron)
-* [https://baron.readthedocs.org](https://baron.readthedocs.org)
-* <code>pip install redbaron</code>
-
-Baron :
-
-* [https://github.com/psycojoker/baron](https://github.com/psycojoker/baron)
-* [https://redbaron.readthedocs.org](https://redbaron.readthedocs.org)
-* <code>pip install baron</code>
-
-Contacts :
-
-* Moi : cortex@worlddomination.be
-* Irc : irc.freenode.net#baron
